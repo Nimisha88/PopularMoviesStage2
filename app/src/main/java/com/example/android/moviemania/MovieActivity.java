@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -17,6 +18,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
@@ -43,8 +45,11 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
     private final static int GRID_COLUMN_COUNT = 3;
 
     private static final String SAVE_STATE_KEY = "SaveState";
+    private static final String SAVE_SCROLL_KEY = "SaveScroll";
+    private Parcelable mScrollState;
     private boolean mSaveState = false;
     private boolean mIsError = false;
+    private boolean mIsSharedPrefChange = false;
 
     //Member Variables
     private String mUserSortChoice;
@@ -76,6 +81,9 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
                 mSaveState = savedInstanceState
                         .getBoolean(SAVE_STATE_KEY);
             }
+            if (savedInstanceState.containsKey(SAVE_SCROLL_KEY)) {
+                mScrollState = savedInstanceState.getParcelable(SAVE_SCROLL_KEY);
+            }
         }
 
         setupSharedPreferences();
@@ -98,13 +106,25 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(!mIsError)
+        if(!mIsError) {
             outState.putBoolean(SAVE_STATE_KEY, true);
+            outState.putParcelable(SAVE_SCROLL_KEY, mMovieDisplayRecyclerView.getLayoutManager().onSaveInstanceState());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mScrollState = savedInstanceState.getParcelable(SAVE_SCROLL_KEY);
     }
 
     private void loadMovie() {
 
-        if (!mSaveState) {
+        if (!mSaveState || mIsSharedPrefChange) {
+
+            mSaveState = false;
+            mIsSharedPrefChange = false;
+
             //Delete existing tables
             MovieSyncUtils.deleteTables(this);
 
@@ -112,7 +132,6 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
             Log.i(TAG, "Syncing Movie Data from API");
             MovieSyncUtils.initialize(this);
 
-            mSaveState = false;
         }
         //Set Visibility of Elements
         showLoadProgressBar();
@@ -203,15 +222,28 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
 
         mMovieAdapter.swapCursor(dataCursor);
 
-        if (mPosition == RecyclerView.NO_POSITION)
-            mPosition = 0;
-
-        mMovieDisplayRecyclerView.smoothScrollToPosition(mPosition);
+        Log.i(TAG, "onLoadFinished: Recycler View Position" + mPosition);
 
         if (dataCursor.getCount() != 0)
             showMovieDataView();
         else
             showErrorMessageView();
+
+        if (mScrollState != null) {
+
+            Log.i(TAG, "onLoadFinished: mScroll State not NULL!");
+            mMovieDisplayRecyclerView.getLayoutManager().onRestoreInstanceState(mScrollState);
+            mScrollState = null;
+
+        } else {
+
+            Log.i(TAG, "onLoadFinished: mScroll State is NULL!");
+
+            if (mPosition == RecyclerView.NO_POSITION)
+                mPosition = 0;
+
+            mMovieDisplayRecyclerView.smoothScrollToPosition(mPosition);
+        }
 
     }
 
@@ -253,7 +285,7 @@ public class MovieActivity extends AppCompatActivity implements MovieAdapter.Lis
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.equals(getString(R.string.movie_sort_key))) {
             mUserSortChoice = sharedPreferences.getString(key, getString(R.string.movie_sort_default));
-            mSaveState = false;
+            mIsSharedPrefChange = true;
             loadMovie();
         }
     }

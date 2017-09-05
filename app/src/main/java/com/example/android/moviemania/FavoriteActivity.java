@@ -3,6 +3,7 @@ package com.example.android.moviemania;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -32,6 +33,8 @@ public class FavoriteActivity extends AppCompatActivity implements MovieAdapter.
     private RecyclerView.LayoutManager layoutManager;
     private MovieAdapter mMovieAdapter;
     private int mPosition = RecyclerView.NO_POSITION;
+    private static final String SAVE_SCROLL_KEY = "SaveScroll";
+    private Parcelable mScrollState;
 
     //ButterKnife Unbinder
     private Unbinder unbinder;
@@ -47,6 +50,12 @@ public class FavoriteActivity extends AppCompatActivity implements MovieAdapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SAVE_SCROLL_KEY)) {
+                mScrollState = savedInstanceState.getParcelable(SAVE_SCROLL_KEY);
+            }
+        }
 
         //Delete All Data in DB, uncomment only when needed
         //getContentResolver().delete(MovieEntry.CONTENT_URI, null, null);
@@ -116,6 +125,18 @@ public class FavoriteActivity extends AppCompatActivity implements MovieAdapter.
         unbinder.unbind();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(SAVE_SCROLL_KEY, mFavDisplayRecyclerView.getLayoutManager().onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mScrollState = savedInstanceState.getParcelable(SAVE_SCROLL_KEY);
+    }
+
     /*//Show Error Message View
     public void showErrorMessageView() {
         mMovieDisplayRecyclerView.setVisibility(View.INVISIBLE);
@@ -163,13 +184,24 @@ public class FavoriteActivity extends AppCompatActivity implements MovieAdapter.
 
         mMovieAdapter.swapCursor(dataCursor);
 
-        if (mPosition == RecyclerView.NO_POSITION)
-            mPosition = 0;
-
-        mFavDisplayRecyclerView.smoothScrollToPosition(mPosition);
-
         if (dataCursor.getCount() != 0)
             showMovieDataView();
+
+        if (mScrollState != null) {
+
+            Log.i(TAG, "onLoadFinished: mScroll State not NULL!");
+            mFavDisplayRecyclerView.getLayoutManager().onRestoreInstanceState(mScrollState);
+            mScrollState = null;
+
+        } else {
+
+            Log.i(TAG, "onLoadFinished: mScroll State is NULL!");
+
+            if (mPosition == RecyclerView.NO_POSITION)
+                mPosition = 0;
+
+            mFavDisplayRecyclerView.smoothScrollToPosition(mPosition);
+        }
 
     }
 
