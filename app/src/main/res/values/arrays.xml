@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="sortOptionKeys">
+        <item>@string/movie_sort_popular_key</item>
+        <item>@string/movie_sort_top_rated_key</item>
+    </array>
+
+    <array name="sortOptionValues">
+        <item>@string/movie_sort_popular</item>
+        <item>@string/movie_sort_top_rated</item>
+    </array>
+
+
+</resources>

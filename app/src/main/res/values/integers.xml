@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Movie Table Indexes MUST match Projections in MovieEntry Contract -->
+    <integer name="index_movie_auto_id">0</integer>
+    <integer name="index_movie_vote_count">1</integer>
+    <integer name="index_movie_id">2</integer>
+    <integer name="index_movie_vote_average">3</integer>
+    <integer name="index_movie_title">4</integer>
+    <integer name="index_movie_popularity">5</integer>
+    <integer name="index_movie_poster_path">6</integer>
+    <integer name="index_movie_original_language">7</integer>
+    <integer name="index_movie_original_title">8</integer>
+    <integer name="index_movie_backdrop_path">9</integer>
+    <integer name="index_movie_adult">10</integer>
+    <integer name="index_movie_overview">11</integer>
+    <integer name="index_movie_release_day">12</integer>
+    <integer name="index_movie_release_month">13</integer>
+    <integer name="index_movie_release_year">14</integer>
+    <integer name="index_movie_column_create_timestamp">15</integer>
+
+    <!-- Favorites Table Indexes MUST match Projections in FetchEntry Contract -->
+    <integer name="index_favorite_auto_id">0</integer>
+    <integer name="index_favorite_vote_count">1</integer>
+    <integer name="index_favorite_movie_id">2</integer>
+    <integer name="index_favorite_vote_average">3</integer>
+    <integer name="index_favorite_title">4</integer>
+    <integer name="index_favorite_popularity">5</integer>
+    <integer name="index_favorite_poster_path">6</integer>
+    <integer name="index_favorite_original_language">7</integer>
+    <integer name="index_favorite_original_title">8</integer>
+    <integer name="index_favorite_backdrop_path">9</integer>
+    <integer name="index_favorite_adult">10</integer>
+    <integer name="index_favorite_overview">11</integer>
+    <integer name="index_favorite_release_day">12</integer>
+    <integer name="index_favorite_release_month">13</integer>
+    <integer name="index_favorite_release_year">14</integer>
+    <integer name="index_favorite_column_create_timestamp">15</integer>
+
+    <!-- Video Table Indexes MUST match Projections in VideoEntry Contract -->
+    <integer name="index_video_auto_id">0</integer>
+    <integer name="index_video_movie_id">1</integer>
+    <integer name="index_video_video_key">2</integer>
+    <integer name="index_video_column_create_timestamp">3</integer>
+
+    <!-- Trailer Table Indexes MUST match Projections in VideoEntry Contract -->
+    <integer name="index_review_auto_id">0</integer>
+    <integer name="index_review_movie_id">1</integer>
+    <integer name="index_review_url">2</integer>
+    <integer name="index_review_column_create_timestamp">3</integer>
+
+    <!-- Color -->
+    <integer name="disable_like">300</integer>
+
+</resources>

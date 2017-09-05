@@ -1,0 +1,47 @@
+<resources>
+    <!-- For Sorting -->
+    <string name="movie_sort_key">UserSortChoice</string>
+    <string name="movie_sort_title">User Sort Choice</string>
+    <string name="movie_sort_default" translatable="false">popular</string>
+    <string name="movie_sort_popular_key">Popular</string>
+    <string name="movie_sort_popular" translatable="false">popular</string>
+    <string name="movie_sort_top_rated_key">Top Rated</string>
+    <string name="movie_sort_top_rated" translatable="false">top_rated</string>
+
+    <!-- App Name and Error Message -->
+    <string name="app_name">MovieMania</string>
+    <string name="error_message">Sorry :(! Looks like something went wrong!! Please check your Internet Connection and try again.</string>
+
+    <!-- Text View Labels -->
+    <string name="movie_poster_text">Movie Poster</string>
+
+    <!-- Activity Detail Extra String Key -->
+    <string name="detail_act_movie_auto_id_key">MovieUniqueID</string>
+    <string name="detail_act_movie_id_key">MovieID</string>
+    <string name="detail_act_uri_key">ContentURI</string>
+    <string name="content_uri_movie">Movie</string>
+    <string name="content_uri_fav">Favorite</string>
+    <string name="rating_on">10</string>
+    <string name="trailer_unavailable">No Trailers Available!</string>
+    <string name="review_unavailable">No Reviews Available!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_fav">Favorite</string>
+    <string name="menu_share">Share Trailer</string>
+    <string name="menu_refresh">Refresh</string>
+
+    <!-- Favorite Extra String Key -->
+    <string name="favorite_action_extra_key">ActionURI</string>
+    <string name="act_add_fav">add-favorite</string>
+    <string name="act_del_fav">delete-favorite</string>
+    <string name="act_is_fav">is-favorite</string>
+
+    <!-- Notification related Strings -->
+    <string name="noti_content_title">Movie Mania Data Refreshed</string>
+    <string name="noti_content">Movie Mania just refreshed it\'s data from the server!</string>
+
+    <!-- Content Descriptions -->
+    <string name="content_description_review">Reviews</string>
+    <string name="content_description_trailer">Trailers</string>
+    <string name="content_description_movie_poster">Movie Poster</string>
+
+</resources>

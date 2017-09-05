@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default Color Theme
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color> -->
+    <color name="colorPrimary">#F44336</color>
+    <color name="colorPrimaryDark">#D32F2F</color>
+    <color name="colorAccent">#7C4DFF</color>
+    <color name="text_font_white">#FFFFFF</color>
+    <color name="text_shadow">#666666</color>
+    <color name="metallicGold">#FFDF00</color>
+    <color name="lightGrey">#D3D3D3</color>
+    <color name="contrastLike">#ff9800</color>
+    <color name="disableLike">#90a4ae</color>
+</resources>
